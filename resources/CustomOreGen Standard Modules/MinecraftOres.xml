@@ -6,6 +6,37 @@
 ***********************************************************************************************-->
 <ConfigSection>
 
+<!-- KNOWN ISSUES **
+
+'vanillaOreGen' is used inside IfCondition tests.
+This means you cannot alter it at runtime with /cogOption and expect meaningful results.
+It has to be altered by editing the config file.
+
+Several options are not "dim0"'d named. This means that they cannot be altered in
+ages as opposed to the overworld. "vanillaOreGen" is the one most likely to be a concern.
+-->
+
+<!-- "Deep Dark" seems to match the test for "RandomLevelSource". Ick. -->
+
+    <Comment> Recent change: The IfCondition that controls this file was moved up to the top.
+              No changes were made to the indentation of the starting section.
+
+              This means that:
+                1. Indentation of the "What ores should be generated" should match 
+                   the indentation of the generation, and
+                2. Whole thing needs to be tested for single player level gen.
+
+                                  &amp; (dimension.generator.class != "ChunkProviderUnderdark")
+    </Comment>
+
+    <IfCondition condition=':= ((dimension.generator = "RandomLevelSource" 
+                                       |  dimension.generator = "TwilightLevelSource" )
+                              )
+    '>
+<!--                             | (dimension.generator.class = "ChunkProviderTwilightForest") '>
+== either of these works -->
+
+
     <!--***************************   Options + Symbols   ***********************************
     *
     *   Below are options and symbols for Coal, Iron, Gold, Redstone, Diamond, Lapis Lazuli, 
@@ -25,6 +56,9 @@
                 Distribution options for the vanilla Minecraft ores.
             </Description>
         </OptionDisplayGroup>
+
+<!-- Again, do not let these defaults get defined in dimension 0.
+Some special defaults for that. -->
 
         <!--*******************   Coal   ***********************-->
         <ConfigSection>
@@ -63,7 +97,7 @@
             <MystcraftSymbol name='coalClusters' displayName='Coal Clusters'/>
             <MystcraftSymbol name='coalVeins' displayName='Coal Veins'/>
             <MystcraftSymbol name='coalClouds' displayName='Coal Clouds'>
-                <Instability>:= 50 * (age.coalClusters + age.coalVeins + age.coalClouds - 1)^3</Instability>
+                <Instability>:= 50 * (max(1, age.coalClusters + age.coalVeins + age.coalClouds) - 1)^3</Instability>
             </MystcraftSymbol>
        
         </ConfigSection>        
@@ -105,7 +139,7 @@
             <MystcraftSymbol name='ironClusters' displayName='Iron Clusters'/>
             <MystcraftSymbol name='ironVeins' displayName='Iron Veins'/>
             <MystcraftSymbol name='ironClouds' displayName='Iron Clouds'>
-                <Instability>:= 50 * (age.ironClusters + age.ironVeins + age.ironClouds - 1)^3</Instability>
+                <Instability>:= 50 * (max(1, age.ironClusters + age.ironVeins + age.ironClouds) - 1)^3</Instability>
             </MystcraftSymbol>
             
         </ConfigSection>           
@@ -147,11 +181,11 @@
             <MystcraftSymbol name='goldClusters' displayName='Gold Clusters'/>
             <MystcraftSymbol name='goldVeins' displayName='Gold Veins'/>
             <MystcraftSymbol name='goldClouds' displayName='Gold Clouds'>
-                <Instability>:= 50 * (age.goldClusters + age.goldVeins + age.goldClouds - 1)^3</Instability>
+                <Instability>:= 50 * (max(1, age.goldClusters + age.goldVeins + age.goldClouds) - 1)^3</Instability>
             </MystcraftSymbol>
             
         </ConfigSection>           
-        
+
         <!--*****************   Redstone   *********************-->
         <ConfigSection>        
         
@@ -189,7 +223,7 @@
             <MystcraftSymbol name='redstoneClusters' displayName='Redstone Clusters'/>
             <MystcraftSymbol name='redstoneVeins' displayName='Redstone Veins'/>
             <MystcraftSymbol name='redstoneClouds' displayName='Redstone Clouds'>
-                <Instability>:= 50 * (age.redstoneClusters + age.redstoneVeins + age.redstoneClouds - 1)^3</Instability>
+                <Instability>:= 50 * (max(1, age.redstoneClusters + age.redstoneVeins + age.redstoneClouds) - 1)^3</Instability>
             </MystcraftSymbol>
             
         </ConfigSection>           
@@ -231,7 +265,7 @@
             <MystcraftSymbol name='diamondClusters' displayName='Diamond Clusters'/>
             <MystcraftSymbol name='diamondVeins' displayName='Diamond Veins'/>
             <MystcraftSymbol name='diamondClouds' displayName='Diamond Clouds'>
-                <Instability>:= 50 * (age.diamondClusters + age.diamondVeins + age.diamondClouds - 1)^3</Instability>
+                <Instability>:= 50 * (max(1, age.diamondClusters + age.diamondVeins + age.diamondClouds) - 1)^3</Instability>
             </MystcraftSymbol>
             
         </ConfigSection>           
@@ -273,7 +307,7 @@
             <MystcraftSymbol name='lapisClusters' displayName='Lapis Lazuli Clusters'/>
             <MystcraftSymbol name='lapisVeins' displayName='Lapis Lazuli Veins'/>
             <MystcraftSymbol name='lapisClouds' displayName='Lapis Lazuli Clouds'>
-                <Instability>:= 50 * (age.lapisClusters + age.lapisVeins + age.lapisClouds - 1)^3</Instability>
+                <Instability>:= 50 * (max(1, age.lapisClusters + age.lapisVeins + age.lapisClouds) - 1)^3</Instability>
             </MystcraftSymbol>
             
         </ConfigSection>           
@@ -315,7 +349,7 @@
             <MystcraftSymbol name='emeraldClusters' displayName='Emerald Clusters'/>
             <MystcraftSymbol name='emeraldVeins' displayName='Emerald Veins'/>
             <MystcraftSymbol name='emeraldClouds' displayName='Emerald Clouds'>
-                <Instability>:= 50 * (age.emeraldClusters + age.emeraldVeins + age.emeraldClouds - 1)^3</Instability>
+                <Instability>:= 50 * (max(1, age.emeraldClusters + age.emeraldVeins + age.emeraldClouds) - 1)^3</Instability>
             </MystcraftSymbol>
 
         </ConfigSection>
@@ -337,7 +371,6 @@
     *       A re-creation of the vanilla ore generation using the StandardGen algorithm.
     *
     *************************************************************************************-->
-    <IfCondition condition=':= dimension.generator = "RandomLevelSource"'>
         
         <!--**********   Vanilla Deposit Removal   *************-->
         <Substitute name='StandardOreSubstitute' block='stone'>
@@ -346,30 +379,69 @@
             </Description>
             <Comment>  
                 The global option deferredPopulationRange must be large enough to catch all ore clusters (>= 32).
+
+** NB: Disable this if vanilla ore gen is disabled --
+will be needed moving forward for mystcraft, solves
+lots of issues in twilight forest
+
             </Comment>
-            <Replaces block='oreCoal'/> 
-            <Replaces block='oreIron'/> 
-            <Replaces block='oreGold'/> 
-            <Replaces block='oreRedstone'/> 
-            <Replaces block='oreDiamond'/> 
-            <Replaces block='oreLapis'/> 
-            <Replaces block='oreEmerald'/>
+            <maxHeight>:= if (dimension.generator = "TwilightLevelSource", 27.6, 255)
+               </maxHeight> <!-- Replace Y=1 to Y=27; do not replace Y=28 or above -->
+            <Comment>
+Hollow hills have floor air at 27, floor ground at 26. However, all
+ground ores seem to be random. The rewards seem to mostly be 30 and up,
+sometimes 29 and up. I have seen 25, once.
+
+            </Comment>
+            <IfCondition condition='?vanillaOreGen'>
+                <Comment> Only replace stuff if you are using the vanilla ore gen.
+                          Do not replace stuff if not (implies special ground treasures)
+                </Comment>
+                <Replaces block='oreCoal'/> 
+                <Replaces block='oreIron'/> 
+                <Replaces block='oreGold'/> 
+                <Replaces block='73'/> <!-- oreRedstone -->
+                <Replaces block='oreDiamond'/> 
+                <Replaces block='oreLapis'/> 
+                <Replaces block='oreEmerald'/>
+                <!-- <Replaces block='monsterStoneEgg'/> -->
+                <Comment> Silverfish is a problem. If it's generated near emeralds, or TF diamonds,
+                          you probably want to be able to re-place them with changed distributions.
+                          But, you don't want to remove them from strongholds ...
+                </Comment>
+            </IfCondition>
         </Substitute>
-        
+
+<Comment>
+    Coal and Iron in the twilight forest get really messy now.
+    If we have substitute on, then TF only substitutes partials, and we have constants in there
+for that case already. (In other words, there are some coal and iron clusters still present
+above the water).
+    But if we have vanilla generation off, and no substitute, then we have to generate more than
+just the partials.
+</Comment>
+
         <!--*******************   Coal   ***********************-->
         <ConfigSection>
         
-            <IfCondition condition=':= if(age, age.coalClusters > 0, coalDist = "vanillaStdGen")'>    
+            <IfCondition condition=':= if(age
+                    &amp; (age.coalClusters + age.coalVeins + age.coalClouds > 0 )
+                    , age.coalClusters > 0, coalDist = "vanillaStdGen")'>    
                 <StandardGen name='CoalStandard' block='oreCoal' inherits='PresetStandardGen'> 
                     <Description> Equivalent to vanilla minecraft coal distribution </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x60101010</WireframeColor>
                     <Setting name='Size' avg=':= 2 * coalSize * _default_'/> 
-                    <Setting name='Frequency' avg=':= coalFreq * if(age,age.coalClusters,1) * _default_'/>
+                    <Setting name='Frequency' avg=':= coalFreq * if(age,max(age.coalClusters,1),1)
+                          * if (?vanillaOreGen &amp; dimension.generator = "TwilightLevelSource", 0.75, 1)
+ * _default_'/>
+                          <!-- Twilight forest substitute leaves coal and iron in the hills -->
                 </StandardGen> 
             </IfCondition>   
             
-            <IfCondition condition=':= if(age, age.coalVeins > 0, coalDist = "layeredVeins")'>    
+            <IfCondition condition=':= if(age
+                    &amp; (age.coalClusters + age.coalVeins + age.coalClouds > 0 )
+                    , age.coalVeins > 0, coalDist = "layeredVeins")'>    
                 <Veins name='CoalVeins' block='oreCoal' inherits='PresetSparseVeins'>    
                     <Description>
                         Coal spawns just near the surface, and up into hills and mountains.  The veins are
@@ -378,7 +450,10 @@
                     </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x60101010</WireframeColor>
-                    <Setting name='MotherlodeFrequency' avg=':= 10.7 * coalFreq * if(age,age.coalVeins,1) * _default_'/>
+                    <Setting name='MotherlodeFrequency' avg=':= 10.7 * coalFreq * if(age,max(age.coalVeins,1),1)
+                          * if (?vanillaOreGen &amp; dimension.generator = "TwilightLevelSource", 0.75, 1)
+ * _default_'/>
+                          <!-- Twilight forest substitute leaves coal and iron in the hills -->
                     <Setting name='MotherlodeSize' avg=':= coalSize * _default_' range=':= coalSize * _default_'/>
                     <Setting name='MotherlodeHeight' avg=':= 60/64 * dimension.groundLevel' range=':= 10/64 * dimension.groundLevel'/>
                     <Setting name='BranchLength' avg=':= 0.45 * _default_' range=':= 0.45 * _default_'/>
@@ -387,27 +462,44 @@
                     <Setting name='SegmentRadius' avg=':= coalSize * _default_' range=':= coalSize * _default_'/>
                     <Setting name='OreDensity' avg=':= 1.75 * _default_' range=':= _default_'/>
                 </Veins>
+                <Veins name='CoalVeinsOcean' inherits='CoalVeins'>
+                    <Comment> Just like iron, vanilla puts coal in the oceans, and without this, an island
+                            start gets really painful.
+                            This frequency tests as about 7.2 per chunk.
+                    </Comment>
+                    <Setting name='MotherlodeFrequency' avg=':= 0.6 * _default_ '/>
+                    <Setting name='MotherlodeHeight' avg=':= 37/60 * _default_'  range=':= 5.5/10 * _default_' />
+                    <Biome name='.*Ocean' />
+                </Veins>
                 <Veins name='CoalVeinsSwamp' inherits='CoalVeins'>
                     <Description>  This roughly triples the chance of finding coal in a swamp. </Description>      
-                    <Setting name='MotherlodeFrequency' avg=':= 2 * _default_'/>
-                    <Setting name='MotherlodeHeight' avg=':= _default_' range=':= 2 * _default_'/>
+                          <!-- Factor out the reduction for the extras; should be twice the natural default, even in the forest. -->
+                    <Setting name='MotherlodeFrequency' avg=':= 2 
+                          * if (?vanillaOreGen &amp; dimension.generator = "TwilightLevelSource", 1.33, 1)
+ * _default_'/>
+                    <Setting name='MotherlodeHeight' avg=':= _default_ - 8' range=':= 2 * _default_'/>
                     <Setting name='BranchHeightLimit' avg=':= 2 * _default_'/>  
                     <BiomeType name='Swamp'/>
                 </Veins>      
             </IfCondition>     
             
-            <IfCondition condition=':= if(age, age.coalClouds > 0, coalDist = "strategicClouds")'>    
+            <IfCondition condition=':= if(age
+                    &amp; (age.coalClusters + age.coalVeins + age.coalClouds > 0 )
+                    , age.coalClouds > 0, coalDist = "strategicClouds")'>    
                 <Cloud name='CoalCloud' block='oreCoal' inherits='PresetStrategicCloud'>
                     <Description>  
                         Diffuse coal cloud surrounded by single-block "hint" veins, found in swamps.
                     </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x60101010</WireframeColor> 
-                    <Setting name='DistributionFrequency' avg=':= 5 * coalFreq * if(age,age.coalClouds,1) * _default_'/>
+                          <!-- Twilight forest substitute leaves coal and iron in the hills -->
+                    <Setting name='DistributionFrequency' avg=':= 5 * coalFreq * if(age,max(age.coalClouds,1),1)
+                          * if (?vanillaOreGen &amp; dimension.generator = "TwilightLevelSource", 0.80, 1)
+* _default_'/>
                     <Setting name='CloudRadius' avg=':= 1.2 * coalSize * _default_' range=':= 1.2 * coalSize * _default_'/>
                     <Setting name='CloudThickness' avg=':= coalSize * _default_' range=':= coalSize * _default_'/>
                     <Setting name='OreDensity' avg=':= 0.75 * _default_'/>
-                    <BiomeType name='Swampland'/>
+                    <BiomeType name='Swamp'/>
                     <Veins name='CoalHintVeins' block='oreCoal' inherits='PresetHintVeins'>
                         <DrawWireframe>:=drawWireframes</DrawWireframe>
                         <WireframeColor>0x60101010</WireframeColor> 
@@ -422,48 +514,74 @@
         <!--*******************   Iron   ***********************-->
         <ConfigSection>
         
-            <IfCondition condition=':= if(age, age.ironClusters > 0, ironDist = "vanillaStdGen")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.ironClusters + age.ironVeins + age.ironClouds > 0 )
+                    , age.ironClusters > 0, ironDist = "vanillaStdGen")'>
                 <StandardGen name='IronStandard' block='oreIron' inherits='PresetStandardGen'> 
                     <Description> Equivalent to vanilla minecraft iron distribution </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40221100</WireframeColor> 
                     <Setting name='Size' avg=':= ironSize * _default_'/> 
-                    <Setting name='Frequency' avg=':= ironFreq * if(age,age.ironClusters,1) * _default_'/>
+                    <Setting name='Frequency' avg=':= ironFreq * if(age,max(age.ironClusters,1),1) * _default_'/>
                     <Setting name='Height' avg=':= 32/64 * dimension.groundLevel' range=':= 32/64 * dimension.groundLevel'/> 
                 </StandardGen> 
             </IfCondition>
-                
-            <IfCondition condition=':= if(age, age.ironVeins > 0, ironDist = "layeredVeins")'>
+
+            <IfCondition condition=':= if(age
+                    &amp; (age.ironClusters + age.ironVeins + age.ironClouds > 0 )
+                    , age.ironVeins > 0, ironDist = "layeredVeins")'>
                 <Veins name='IronVeins' block='oreIron' inherits='PresetLayeredVeins'>
                     <Description> 
                         Iron spawns in the height 30-50 range.  The veins are average in length and size.
                     </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40221100</WireframeColor> 
-                    <Setting name='MotherlodeFrequency' avg=':= 0.9 * ironFreq * if(age,age.ironVeins,1) * _default_'/>
+                          <!-- Twilight forest substitute leaves coal and iron in the hills -->
+                    <Setting name='MotherlodeFrequency' avg=':= 0.9 * ironFreq * if(age,max(age.ironVeins,1),1)
+                          * if (?vanillaOreGen &amp; dimension.generator = "TwilightLevelSource", 0.75, 1)
+* _default_'/>
                     <Setting name='MotherlodeSize' avg=':= ironSize * _default_' range=':= ironSize * _default_'/>
                     <Setting name='MotherlodeHeight' avg=':= 43/64 * dimension.groundLevel' range=':= 10.5/64 * dimension.groundLevel' type='normal'/>
                     <Setting name='BranchHeightLimit' avg='10.5'/>
                     <Setting name='SegmentRadius' avg=':= ironSize * _default_' range=':= ironSize * _default_'/>
                 </Veins>
+                <Veins name='IronVeinsOcean' inherits='IronVeins'>
+                    <!-- Vanilla generates iron in the ocean just fine. But these distributions don't.
+                        So, for oceans, we generate the distributions a little lower. Given vanilla oceans,
+                        and the nature of an ocean spawn, this is kinda critical if you start on a
+                        small island. -->
+                    <Biome name='.*Ocean' />
+                    <Setting name='MotherlodeHeight' avg=':= 37/43 * _default_'  range=':= 5.5/10.5 * _default_' />
+                    <Setting name='MotherlodeFrequency' avg=':= 0.185 * _default_' />
+                    <!-- We can not stop normal iron veins from generating. But much of them will be in the
+                        water. This provides a good compromise - about 6 per chunk (from 4.83+). -->
+                </Veins>
                 <Veins name='IronVeinsCold' inherits='IronVeins'>
                     <Description> This roughly triples the chance of finding iron in cold/icy biomes. </Description> 
-                    <Setting name='MotherlodeFrequency' avg=':= 2 * _default_'/>
+                          <!-- Factor out the reduction for the extras; should be twice the natural default, even in the forest. -->
+                    <Setting name='MotherlodeFrequency' avg=':= 2
+                          * if (?vanillaOreGen &amp; dimension.generator = "TwilightLevelSource", 1.33, 1)
+                          * _default_'/>
                     <Setting name='MotherlodeHeight' avg=':=_default_' range=':= 2 * _default_'/>
                     <Setting name='BranchHeightLimit' avg=':= 2 * _default_'/>  
                     <BiomeType name='Frozen'/>
                     <BiomeType name='Water' weight='-1'/>
                 </Veins>
             </IfCondition>   
-                
-            <IfCondition condition=':= if(age, age.ironClouds > 0, ironDist = "strategicClouds")'>
+
+            <IfCondition condition=':= if(age
+                    &amp; (age.ironClusters + age.ironVeins + age.ironClouds > 0 )
+                    , age.ironClouds > 0, ironDist = "strategicClouds")'>
                 <Cloud name='IronCloud' block='oreIron' inherits='PresetStrategicCloud'>
                     <Description>  
                         Diffuse iron cloud surrounded by single-block "hint" veins, found in cold biomes.
                     </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40221100</WireframeColor> 
-                    <Setting name='DistributionFrequency' avg=':= 2.5 * ironFreq * if(age,age.ironClouds,1) * _default_'/>
+                          <!-- Twilight forest substitute leaves coal and iron in the hills -->
+                    <Setting name='DistributionFrequency' avg=':= 2.5 * ironFreq * if(age,max(age.ironClouds,1),1)
+                          * if (?vanillaOreGen &amp; dimension.generator = "TwilightLevelSource", 0.80, 1)
+                          * _default_'/>
                     <Setting name='CloudRadius' avg=':= ironSize * _default_' range=':= ironSize * _default_'/>
                     <Setting name='CloudThickness' avg=':= ironSize * _default_' range=':= ironSize * _default_'/> 
                     <BiomeType name='Frozen'/>
@@ -472,7 +590,7 @@
                         <DrawWireframe>:=drawWireframes</DrawWireframe>
                         <WireframeColor>0x40221100</WireframeColor>
                         <Setting name='MotherlodeFrequency' avg=':= _default_' range=':= _default_'/>   
-                        <Setting name='MotherlodeRangeLimit' avg=':= ironSize * _default_' range=':= ironSize * _default_'/>              
+                        <Setting name='MotherlodeRangeLimit' avg=':= ironSize * _default_' range=':= ironSize * _default_'/>
                     </Veins>                         
                 </Cloud> 
             </IfCondition>      
@@ -482,18 +600,22 @@
         <!--*******************   Gold   ***********************-->
         <ConfigSection>
         
-            <IfCondition condition=':= if(age, age.goldClusters > 0, goldDist = "vanillaStdGen")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.goldClusters + age.goldVeins + age.goldClouds > 0 )
+                    , age.goldClusters > 0, goldDist = "vanillaStdGen")'>
                 <StandardGen name='GoldStandard' block='oreGold' inherits='PresetStandardGen'> 
                     <Description> Equivalent to vanilla minecraft gold distribution </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40443300</WireframeColor> 
                     <Setting name='Size' avg=':= goldSize * _default_'/> 
-                    <Setting name='Frequency' avg=':= 0.1 * goldFreq * if(age,age.goldClusters,1) * _default_'/>
+                    <Setting name='Frequency' avg=':= 0.1 * goldFreq * if(age,max(age.goldClusters,1),1) * _default_'/>
                     <Setting name='Height' avg=':= 16/64 * dimension.groundLevel' range=':= 16/64 * dimension.groundLevel'/>
                 </StandardGen> 
             </IfCondition>
                 
-            <IfCondition condition=':= if(age, age.goldVeins > 0, goldDist = "layeredVeins")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.goldClusters + age.goldVeins + age.goldClouds > 0 )
+                    , age.goldVeins > 0, goldDist = "layeredVeins")'>
                 <Veins name='GoldVeins' block='oreGold' inherits='PresetLayeredVeins'> 
                     <Description> 
                         Gold spawns in the height 10-30 range.  The veins are shorter than average,
@@ -501,7 +623,7 @@
                     </Description>  
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40443300</WireframeColor> 
-                    <Setting name='MotherlodeFrequency' avg=':= 0.85 * goldFreq * if(age,age.goldVeins,1) * _default_'/>
+                    <Setting name='MotherlodeFrequency' avg=':= 0.85 * goldFreq * if(age,max(age.goldVeins,1),1) * _default_'/>
                     <Setting name='MotherlodeSize' avg=':= 0.8 * goldSize * _default_' range=':= 0.5 * goldSize * _default_'/>
                     <Setting name='MotherlodeHeight' avg=':= 20/64 * dimension.groundLevel' range=':= 10/64 * dimension.groundLevel' type='normal'/>
                     <Setting name='BranchHeightLimit' avg='10'/>  
@@ -518,15 +640,17 @@
                     <BiomeType name='Forest'/>    
                 </Veins>
             </IfCondition>
-                
-            <IfCondition condition=':= if(age, age.goldClouds > 0, goldDist = "strategicClouds")'>
+
+            <IfCondition condition=':= if(age
+                    &amp; (age.goldClusters + age.goldVeins + age.goldClouds > 0 )
+                    , age.goldClouds > 0, goldDist = "strategicClouds")'>
                 <Cloud name='GoldCloud' block='oreGold' inherits='PresetStrategicCloud'>
                     <Description>  
                         Diffuse gold cloud surrounded by single-block "hint" veins, found in forest biomes.
                     </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40443300</WireframeColor> 
-                    <Setting name='DistributionFrequency' avg=':= 4.5 * goldFreq * if(age,age.goldClouds,1) * _default_'/>
+                    <Setting name='DistributionFrequency' avg=':= 4.5 * goldFreq * if(age,max(age.goldClouds,1),1) * _default_'/>
                     <Setting name='CloudRadius' avg=':= 0.8 * goldSize * _default_' range=':= 0.8 * goldSize * _default_'/>
                     <Setting name='CloudThickness' avg=':= 0.8 * goldSize * _default_' range=':= goldSize * _default_'/>
                     <Setting name='OreDensity' avg=':= 0.3 * _default_'/>
@@ -545,19 +669,23 @@
         <!--*****************   Redstone   *********************-->
         <ConfigSection>
        
-            <IfCondition condition=':= if(age, age.redstoneClusters > 0, redstoneDist = "vanillaStdGen")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.redstoneClusters + age.redstoneVeins + age.redstoneClouds > 0 )
+                    , age.redstoneClusters > 0, redstoneDist = "vanillaStdGen")'>
                 <StandardGen name='RedstoneStandard' block='73' inherits='PresetStandardGen'> 
                     <Description> Equivalent to vanilla minecraft redstone distribution </Description>
                     <Comment> The name "oreRedstone" is ambiguous, so we have to use the block ID (73) </Comment>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40550000</WireframeColor> 
                     <Setting name='Size' avg=':= 7/8 * redstoneSize * _default_'/>
-                    <Setting name='Frequency' avg=':= 0.4 * redstoneFreq * if(age,age.redstoneClusters,1) * _default_'/>
+                    <Setting name='Frequency' avg=':= 0.4 * redstoneFreq * if(age,max(age.redstoneClusters,1),1) * _default_'/>
                     <Setting name='Height' avg=':= 8/64 * dimension.groundLevel' range=':= 8/64 * dimension.groundLevel'/>
                 </StandardGen>
             </IfCondition>
                 
-            <IfCondition condition=':= if(age, age.redstoneVeins > 0, redstoneDist = "layeredVeins")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.redstoneClusters + age.redstoneVeins + age.redstoneClouds > 0 )
+                    , age.redstoneVeins > 0, redstoneDist = "layeredVeins")'>
                 <Veins name='RedstoneVeins' block='73' inherits='PresetVerticalVeins'> 
                     <Comment> The name "oreRedstone" is ambiguous, so we have to use the block ID (73) </Comment>    
                     <Description> 
@@ -565,8 +693,12 @@
                     </Description>  
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40550000</WireframeColor> 
-                    <Setting name='MotherlodeFrequency' avg=':= 1.3 * redstoneFreq * if(age,age.redstoneVeins,1) * _default_'/>
+                            <!-- Vertical veins length depends on ground level.
+                                  Half the length, twice as common -->
+                    <Setting name='MotherlodeFrequency' avg=':= 1.3 * redstoneFreq * if(age,max(age.redstoneVeins,1),1) * _default_'/>
                     <Setting name='SegmentRadius' avg=':= redstoneSize * _default_' range=':= redstoneSize * _default_'/>
+                    <Replaces block='stone'/>
+                    <Replaces block='sandstone'/> 
                 </Veins>
                 <Veins name='RedstoneVeinsDesert' inherits='RedstoneVeins'> 
                     <Description> This roughly triples the chance of finding redstone in deserts. </Description> 
@@ -574,10 +706,14 @@
                     <Replaces block='stone'/>
                     <Replaces block='sandstone'/> 
                     <BiomeType name='Desert'/>    
+                    <Biome name='Clearing Border'/> <Comment> Twilight Forest </Comment>
+                    <Biome name='Twilight Clearing'/> <Comment> Twilight Forest </Comment>
                 </Veins>
             </IfCondition>
-                
-            <IfCondition condition=':= if(age, age.redstoneClouds > 0, redstoneDist = "strategicClouds")'>
+
+            <IfCondition condition=':= if(age
+                    &amp; (age.redstoneClusters + age.redstoneVeins + age.redstoneClouds > 0 )
+                    , age.redstoneClouds > 0, redstoneDist = "strategicClouds")'>
                 <Cloud name='RedstoneCloud' block='73' inherits='PresetStrategicCloud'>
                     <Comment> The name "oreRedstone" is ambiguous, so we have to use the block ID (73) </Comment> 
                     <Description> 
@@ -585,10 +721,12 @@
                     </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40550000</WireframeColor> 
-                    <Setting name='DistributionFrequency' avg=':= 4.5 * redstoneFreq * if(age,age.redstoneClouds,1) * _default_'/>
+                    <Setting name='DistributionFrequency' avg=':= 4.5 * redstoneFreq * if(age,max(age.redstoneClouds,1),1) * _default_'/>
                     <Setting name='CloudRadius' avg=':= 0.65 * redstoneSize * _default_' range=':= 0.5 * redstoneSize * _default_'/>
                     <Setting name='CloudThickness' avg=':= 0.7 * redstoneSize * _default_' range=':= 0.7 * redstoneSize * _default_'/>
                     <BiomeType name='Desert'/>    
+                    <Biome name='Clearing Border'/> <Comment> Twilight Forest </Comment>
+                    <Biome name='Twilight Clearing'/> <Comment> Twilight Forest </Comment>
                     <Veins name='RedstoneHintVeins' block='73' inherits='PresetHintVeins'>
                         <DrawWireframe>:=drawWireframes</DrawWireframe>
                         <WireframeColor>0x40550000</WireframeColor>
@@ -601,34 +739,50 @@
             </IfCondition>  
         
         </ConfigSection>           
-        
+
         <!--*****************   Diamond   **********************-->
         <ConfigSection> 
             
-            <IfCondition condition=':= if(age, age.diamondClusters > 0, diamondDist = "vanillaStdGen")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.diamondClusters + age.diamondVeins + age.diamondClouds > 0 )
+                    , age.diamondClusters > 0, diamondDist = "vanillaStdGen")'>
                 <StandardGen name='DiamondStandard' block='oreDiamond' inherits='PresetStandardGen'> 
                     <Description> Equivalent to vanilla minecraft diamond distribution </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40336699</WireframeColor> 
                     <Setting name='Size' avg=':= 7/8 * diamondSize * _default_'/>
-                    <Setting name='Frequency' avg=':= 1/20 * diamondFreq * if(age,age.diamondClusters,1) * _default_'/>
+                    <Setting name='Frequency' avg=':= 1/20 * diamondFreq * if(age,max(age.diamondClusters,1),1) * _default_'/>
                     <Setting name='Height' avg=':= 8/64 * dimension.groundLevel' range=':= 8/64 * dimension.groundLevel'/>
                 </StandardGen>
             </IfCondition>
                 
-            <IfCondition condition=':= if(age, age.diamondVeins > 0, diamondDist = "layeredVeins")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.diamondClusters + age.diamondVeins + age.diamondClouds > 0 )
+                    , age.diamondVeins > 0, diamondDist = "layeredVeins")'>
+
+                <Comment> Normal worlds get "Kimberlite pipes" of diamonds and lava.
+                Twilight forest gets Anonymous Viking's silverfish hollow pipes.
+                Change: Make it a silverfish filled, instead of lava-filled, standard pipe.
+                </Comment>
+
                 <Veins name="DiamondVeins" block='oreDiamond' inherits='PresetPipeVeins' seed='0xF186'>
                     <Description> Short sparsely filled tubes starting at bedrock. </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40336699</WireframeColor> 
-                    <Setting name='MotherlodeFrequency' avg=':= 0.8 * diamondFreq * if(age,age.diamondVeins,1) * _default_'/> 
-                    <Setting name='MotherlodeHeight' avg=':= 3/64 * dimension.groundLevel' range='0'/>
+                    <Setting name='MotherlodeFrequency' avg=':= 0.8 * diamondFreq * if(age,max(age.diamondVeins,1),1) * _default_'/> 
+                    <Setting name='MotherlodeHeight' avg='3.5' range='0'/>
                     <Setting name='MotherlodeSize' avg=':= diamondSize * _default_' range=':= diamondSize * _default_'/>
                     <Setting name='SegmentRadius' avg=':= diamondSize * _default_' range=':= diamondSize * _default_'/>
                     <Setting name='OreDensity' avg=':= 1.0 * _default_'/>
                 </Veins>
-                <Veins name="DiamondVeinsLava" block='10' inherits='DiamondVeins' seed='0xF186'>
+                <Veins name="DiamondVeinsLava" inherits='DiamondVeins' seed='0xF186'>
                     <Description> Fills center of each tube with lava, forming "kimberlite pipes" </Description>
+                    <IfCondition condition=':= ( dimension.generator = "TwilightLevelSource" ) '>
+                      <Then>
+                        <Block>monsterStoneEgg</Block>   <!-- Twilight forest: Silverfish -->
+                      </Then> <Else> <Comment> Standard distribution if not twilight. </Comment>
+                        <Block>10</Block>   <!-- Others: Lava -->
+                    </Else></IfCondition>
                     <Setting name='MotherlodeSize' avg=':= 0.5 * _default_'/>
                     <Setting name='SegmentRadius' avg=':= 0.5 * _default_'/>
                     <Setting name='OreDensity' avg='1' range='0'/>
@@ -639,12 +793,14 @@
                 </Veins>
             </IfCondition>
                 
-            <IfCondition condition=':= if(age, age.diamondClouds > 0, diamondDist = "strategicClouds")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.diamondClusters + age.diamondVeins + age.diamondClouds > 0 )
+                    , age.diamondClouds > 0, diamondDist = "strategicClouds")'>
                 <Cloud name='DiamondCloud' block='oreDiamond' inherits='PresetStrategicCloud'>
                     <Description>  Diffuse diamond cloud with no internal density noise. </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40336699</WireframeColor> 
-                    <Setting name='DistributionFrequency' avg=':= 10 * diamondFreq * if(age,age.diamondClouds,1) * _default_'/>
+                    <Setting name='DistributionFrequency' avg=':= 10 * diamondFreq * if(age,max(age.diamondClouds,1),1) * _default_'/>
                     <Setting name='CloudRadius' avg=':= 0.5 * diamondSize * _default_' range=':= 0.5 * diamondSize * _default_'/>
                     <Setting name='CloudThickness' avg=':= 0.2 * diamondSize * _default_' range=':= 0.17 * diamondSize * _default_'/>
                     <Setting name='CloudHeight' avg=':= 14/64 * dimension.groundLevel' range=':= 5/64 * dimension.groundLevel'/>
@@ -659,18 +815,22 @@
         <!--***************   Lapis Lazuli   *******************-->
         <ConfigSection> 
         
-            <IfCondition condition=':= if(age, age.lapisClusters > 0, lapisDist = "vanillaStdGen")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.lapisClusters + age.lapisVeins + age.lapisClouds > 0 )
+                    , age.lapisClusters > 0, lapisDist = "vanillaStdGen")'>
                 <StandardGen name='LapisLazuliStandard' block='oreLapis' inherits='PresetStandardGen'> 
                     <Description> Equivalent to vanilla minecraft lapis lazuli distribution </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40000055</WireframeColor> 
                     <Setting name='Size' avg=':= 6/8 * lapisSize * _default_'/>
-                    <Setting name='Frequency' avg=':= 0.05 * lapisFreq * if(age,age.lapisClusters,1) * _default_'/>
+                    <Setting name='Frequency' avg=':= 0.05 * lapisFreq * if(age,max(age.lapisClusters,1),1) * _default_'/>
                     <Setting name='Height' avg=':= 16/64 * dimension.groundLevel' range=':= 16/64 * dimension.groundLevel' type='normal'/>
                 </StandardGen>
             </IfCondition>
                 
-            <IfCondition condition=':= if(age, age.lapisVeins > 0, lapisDist = "layeredVeins")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.lapisClusters + age.lapisVeins + age.lapisClouds > 0 ) 
+                    , age.lapisVeins > 0, lapisDist = "layeredVeins")'>
                 <Veins name='LapisLazuliVeins' block='oreLapis' inherits='PresetVerticalVeins'>         
                     <Description> 
                         Lapis Lazuli spawns in isolated veins that run vertically upward, much like redstone.  However,
@@ -678,9 +838,15 @@
                     </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40000055</WireframeColor> 
-                    <Setting name='MotherlodeFrequency' avg=':= 0.4 * lapisFreq * if(age,age.lapisVeins,1) * _default_'/>
+                            <!-- Vertical veins length depends on ground level.
+                                  Half the length, twice as common -->
+                    <Setting name='MotherlodeFrequency' avg=':= 0.4 * lapisFreq * if(age,max(age.lapisVeins,1),1) * _default_'/>
                     <Setting name='MotherlodeHeight' avg=':= 8/64 * dimension.groundLevel' range='4'/>
-                    <Setting name='BranchLength' avg=':= 36/64 * dimension.groundLevel' range='12' type='normal'/>
+                    <Comment> Redefine BranchLength in terms of the default. 
+                            Default is 48/64*ground level. We want 36/64*ground level. That's only 36/48 of default
+                            Similar adjust for range.
+                    </Comment>
+                    <Setting name='BranchLength' avg=':= 36/48 * _default_' range=':= 12/16 * _default_' type='normal'/>
                     <Setting name='BranchInclination' avg=':= -_default_' range=':=_default_'/>     
                     <Setting name='SegmentRadius' avg=':= lapisSize * _default_' range=':= lapisSize * _default_'/>          
                 </Veins> 
@@ -690,21 +856,28 @@
                     <Replaces block='stone'/>
                     <Replaces block='dirt'/> 
                     <Replaces block='sand'/>
+                    <Replaces block='clay'/>  <!-- BUG FIX! Clay was not replaced on the ocean bottom -->
                     <BiomeType name='Water'/>
                     <Biome name='River' weight='-1'/>
                 </Veins>
             </IfCondition>
                 
-            <IfCondition condition=':= if(age, age.lapisClouds > 0, lapisDist = "strategicClouds")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.lapisClusters + age.lapisVeins + age.lapisClouds > 0 ) 
+                    , age.lapisClouds > 0, lapisDist = "strategicClouds")'>
                 <Cloud name='LapisLazuliCloud' block='oreLapis' inherits='PresetStrategicCloud'>
                     <Description>  Diffuse lapis lazuli cloud surrounded by single-block "hint" veins, found under oceans </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40000055</WireframeColor> 
-                    <Setting name='DistributionFrequency' avg=':= 2.5 * lapisFreq * if(age,age.lapisClouds,1) * _default_'/>
+                    <Setting name='DistributionFrequency' avg=':= 2.5 * lapisFreq * if(age,max(age.lapisClouds,1),1) * _default_'/>
                     <Setting name='CloudRadius' avg=':= 0.65 * lapisSize * _default_' range=':= 0.5 * lapisSize * _default_'/>
                     <Setting name='CloudThickness' avg=':= 0.7 * lapisSize * _default_' range=':= 0.7 * lapisSize * _default_'/> 
                     <BiomeType name='Water'/>
                     <Biome name='River' weight='-1'/>
+                    <Replaces block='stone'/> <!-- BUG FIX! Replaces were missing from the ocean clouds -->
+                    <Replaces block='dirt'/> 
+                    <Replaces block='sand'/>
+                    <Replaces block='clay'/>  <!-- BUG FIX! Clay was not replaced on the ocean bottom -->
                     <Veins name='LapisLazuliHintVeins' block='oreLapis' inherits='PresetHintVeins'>
                         <DrawWireframe>:=drawWireframes</DrawWireframe>
                         <WireframeColor>0x40000055</WireframeColor>
@@ -715,38 +888,84 @@
             </IfCondition>
         
         </ConfigSection>           
-        
+
         <!--*****************   Emerald   **********************-->
         <ConfigSection>
+        <!-- Special! Do not do *ANY* emerald generation if you are using vanilla ore generation.
+            We cannot intercept/prevent those without substitute, and substitute interfears with
+            special ground generation.
+        -->
 
-            <IfCondition condition=':= if(age, age.emeraldClusters > 0, emeraldDist = "vanillaStdGen")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.emeraldClusters + age.emeraldVeins + age.emeraldClouds > 0 ) 
+                    , age.emeraldClusters > 0, emeraldDist = "vanillaStdGen")'>
                 <StandardGen name='EmeraldStandard' block='oreEmerald' inherits='PresetStandardGen'> 
                     <Description> Equivalent to vanilla minecraft diamond distribution </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40339966</WireframeColor> 
                     <Setting name='Size' avg=':= 2/8 * emeraldSize * _default_'/>
-                    <Setting name='Frequency' avg=':= 6/20 * emeraldFreq * if(age,age.emeraldClusters,1) * _default_' 
-                                              range=':= 2 * emeraldFreq * if(age,age.emeraldClusters,1)'/>
+                    <Setting name='Frequency' avg=':= 6/20 * emeraldFreq * if(age,max(age.emeraldClusters,1),1) * _default_' 
+                                              range=':= 2 * emeraldFreq * if(age,max(age.emeraldClusters,1),1)'/>
                     <Setting name='Height' avg=':= 18/64 * dimension.groundLevel' range=':= 14/64 * dimension.groundLevel'/>
-                    <BiomeType name='Mountain'/>
-                    <Biome name='Green\s*Hills'/> <Comment> ExtraBiomesXL </Comment>
+                    <BiomeSet inherits='EmeraldExtremeModHills'/>
+                    <IfCondition condition='?vanillaOreGen'>
+                    <Then > 
+                        <Comment>
+                            'vanillaOreGen' means vanilla generation has been wiped.
+                            So in this case, we do normal clusters in ALL appropriate biomes.
+                        </Comment>
+                        <Biome name='Extreme\s*Hills' />
+                        <Biome name='Extreme\s*Hills\s*Edge' />
+                    </Then> <Else>
+                        <Comment>
+                            If vanilla ore generation is false, do not put anything in vanilla hills.
+                            Vanilla generates in the hills, and we are not doing substitute removal.
+                        </Comment>
+                    </Else>
+                    </IfCondition>
                 </StandardGen>   
             </IfCondition>         
                 
-            <IfCondition condition=':= if(age, age.emeraldVeins > 0, emeraldDist = "layeredVeins")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.emeraldClusters + age.emeraldVeins + age.emeraldClouds > 0 )
+                    , age.emeraldVeins > 0, emeraldDist = "layeredVeins")'>
                 <Veins name="EmeraldVeins" block='oreEmerald' inherits='PresetPipeVeins' seed='0x3966'>
                     <Description> Short sparsely filled tubes.  5x more common in Extreme Hills. </Description>
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40339966</WireframeColor>
-                    <Setting name='MotherlodeFrequency' avg=':= 0.9 * emeraldFreq * if(age,age.emeraldVeins,1) * _default_'/> 
-                    <Setting name='MotherlodeHeight' avg=':= 10/64 * dimension.groundLevel' range=':= 4/64 * dimension.groundLevel'/>
+                    <Setting name='MotherlodeFrequency' avg=':= 0.9 * emeraldFreq * if(age,max(age.emeraldVeins,1),1) * _default_'/> 
+                    <!-- Start from 10 to 24, and slope upwards (see Inclination). Emerald should be distributed over a wide range
+                         to make finding it harder. In the spirit of Jeb, "common" but hard to find. -->
+                    <Setting name='MotherlodeHeight' avg=':= 17/64 * dimension.groundLevel' range=':= 7/64 * dimension.groundLevel'/>
                     <Setting name='MotherlodeSize' avg=':= 0.85 * emeraldSize * _default_' range=':= 0.7 * emeraldSize * _default_'/>
-                    <Setting name='BranchInclination' avg='0.55' range='0.7' type='normal'/>
+                    <Setting name='BranchInclination' avg='0.7854' range='0.5' type='normal'/>
+                      <!-- Change: Branch was 0.55 (up-ish), range 0.7 (could be down). Now it starts "up" with angle. -->
                     <Setting name='SegmentRadius' avg=':= 0.85 * emeraldSize * _default_' range=':= 0.7 * emeraldSize * _default_'/>
                     <Setting name='OreDensity' avg=':= 1.2 * _default_'/>
-                    <Biome name='.*' weight='0.20'/>
-                    <BiomeType name='Mountain'/>
-                    <Biome name='Green\s*Hills'/> <Comment> ExtraBiomesXL </Comment>
+
+                    <IfCondition condition='?vanillaOreGen'>
+                    <Then > 
+                        <Comment>
+                            'vanillaOreGen' means vanilla generation has been wiped.
+                            So in this case, we do normal veins in ALL appropriate biomes.
+                        </Comment>
+                        <BiomeSet inherits='EmeraldExtremeModHills' weight='0.8' />
+                        <Biome name='Extreme\s*Hills'  weight='0.8' />
+                        <Biome name='Extreme\s*Hills\s*Edge'  weight='0.8' />
+                        <Biome name='.*' weight='0.2' />
+                    </Then> <Else>
+                        <Comment>
+                            If vanilla ore generation is false, do not put anything in vanilla hills.
+                            Vanilla generates in the hills, and we are not doing substitute removal.
+                        </Comment>
+                        <Biomeset inherits='VanillaBiomes' weight='-0.2' />
+                        <Biomeset inherits='EmeraldExtremeModHills' weight='0.8' />
+                        <Biome name='.*' weight='0.2'/>
+                            <Comment> Result: Vanilla biomes: 0. Mod Emerald Hills: 1.0. All other mod biomes: 0.2.
+                            </Comment>
+                    </Else>
+                    </IfCondition>
+
                 </Veins>
                 <Veins name="EmeraldVeinsSilverfish" block='monsterStoneEgg' inherits='EmeraldVeins' seed='0x3966'>
                     <Description> 
@@ -754,34 +973,56 @@
                         Credit: based on novel examples by AnonymousViking from the MC forums.
                     </Description>
                     <Setting name='MotherlodeSize' avg='0.51' range='0.1'/>
-                    <Setting name='SegmentRadius' avg='0.51' range='0.1'/>
-                    <Setting name='OreDensity' avg='1' range='0'/>
+                    <!-- Fish radius changed from contant 0.51 to a minimum of 0.709. No more "fishless emeralds". -->
+                    <Setting name='SegmentRadius' avg=':= max(0.51 * _default_, 0.709)' range='0.1'/>
+                    <!-- But the density is lowered; constant did NOT work in testing.
+                         These numbers may still need tuning. -->
+                    <Setting name='OreDensity' avg='.4' range='.133'/>
                     <Replaces block='stone'/>
+                    <Replaces block='.*Stone'/>
                     <Replaces block='oreEmerald'/>
                 </Veins>
             </IfCondition>
                 
-            <IfCondition condition=':= if(age, age.emeraldClouds > 0, emeraldDist = "strategicClouds")'>
+            <IfCondition condition=':= if(age
+                    &amp; (age.emeraldClusters + age.emeraldVeins + age.emeraldClouds > 0 )
+                    , age.emeraldClouds > 0, emeraldDist = "strategicClouds")'>
                 <Cloud name='EmeraldCloud' block='oreEmerald' inherits='PresetStrategicCloud'>
                     <Description>  
                         Diffuse emerald cloud with no internal density noise, found in extreme hills.
                     </Description> 
                     <DrawWireframe>:=drawWireframes</DrawWireframe>
                     <WireframeColor>0x40339966</WireframeColor>                
-                    <Setting name='DistributionFrequency' avg=':= 45 * emeraldFreq * if(age,age.emeraldClouds,1) * _default_'/>
+                    <Setting name='DistributionFrequency' avg=':= 45 * emeraldFreq * if(age,max(age.emeraldClouds,1),1) * _default_'/>
                     <Setting name='CloudRadius' avg=':= 0.4 * emeraldSize * _default_' range=':= 0.4 * emeraldSize * _default_'/>
                     <Setting name='CloudThickness' avg=':= 0.2 * emeraldSize * _default_' range=':= 0.17 * emeraldSize * _default_'/>
-                    <Setting name='CloudHeight' avg=':= 10/64 * dimension.groundLevel' range=':= 5/64 * dimension.groundLevel'/>
+                    <Setting name='CloudHeight' avg=':= 20/64 * dimension.groundLevel' range=':= 5/64 * dimension.groundLevel'/>
                     <Setting name='OreRadiusMult' avg='1' range='0.2'/> 
                     <Setting name='OreDensity' avg=':= 0.4 * _default_'/> 
                     <Setting name='OreVolumeNoiseCutoff' avg='0'/>   
-                    <BiomeType name='Mountain'/>
-                    <Biome name='Green\s*Hills'/> <Comment> ExtraBiomesXL </Comment>
+
+                    <BiomeSet inherits='EmeraldExtremeModHills'/>
+                    <IfCondition condition='?vanillaOreGen'>
+                    <Then > 
+                        <Comment>
+                            'vanillaOreGen' means vanilla generation has been wiped.
+                            So in this case, we do normal clouds in ALL appropriate biomes.
+                        </Comment>
+                        <Biome name='Extreme\s*Hills' />
+                        <Biome name='Extreme\s*Hills\s*Edge' />
+                    </Then> <Else>
+                        <Comment>
+                            If vanilla ore generation is false, do not put anything in vanilla hills.
+                            Vanilla generates in the hills, and we are not doing substitute removal.
+                        </Comment>
+                    </Else>
+                    </IfCondition>
+
                 </Cloud>
             </IfCondition>
             
         </ConfigSection>
-        
+
     </IfCondition>
     
 </ConfigSection>

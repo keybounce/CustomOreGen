@@ -37,7 +37,12 @@
             <Setting name='SegmentRadius' avg='6' range='3.8' type='normal'/>
             <Setting name='OreDensity' avg='1' range='0'/>
             <Setting name='OreRadiusMult' avg='1' range='0.1'/> 
-            <Replaces block='.*'/>
+            <Replaces block='stone'/>
+            <Replaces block='.*Stone'/>
+            <Replaces block='gravel'/>
+            <Replaces block='dirt'/>
+            <!-- Not sand, sandstone, clay, or mycelium. Duplicate existing vanilla behavior.
+                 Note that forge actually "fixed" this for mod biome's biome top blocks. -->
             <Replaces block='water.*' weight='-1'/>  <Comment> Don't match water </Comment>
             <Biome name='.*'/>
         </Veins>    
