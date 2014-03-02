@@ -67,3 +67,34 @@ zero distribution. LOTS.
 
 ...
 
+===
+
+Lets say i want to instantiate two variants of iron ore.
+Say, one at normal, and one higher up.
+The file with iron ore distributions has some parameters that can be set.
+I define one set, include the iron file.
+
+Now, how do I get the second set to define? I can't define the same options again,
+they have a value and trying to define them again won't change their actual value.
+
+So ...
+
+------
+
+If I had presets, I would have one instantiation inherit, and redefine some values.
+Then, have another instantiation inherit, and redefine some values again.
+
+I can see no way around that. So, lets start by pretending that we have this
+sort of "preset group".
+
+====
+
+The plan for stage 2:
+1. Pretend that we have preset groups. Modify the config files.
+
+* Instead of defining distributions for iron veins, iron clouds, and iron clusters,
+there will be presets for iron veins, iron clouds, and iron clusters.
+* A "dimension" file will be defined that instantiates them
+** Dimensions will be provided for the overworld, the deep dark, and cave worlds.
+
+So this is proof of concept time.
